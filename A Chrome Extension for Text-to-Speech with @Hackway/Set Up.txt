@@ -1,0 +1,37 @@
+#A Chrome Extension for Text-to-Speech with @hackway
+
+This code creates a Chrome extension that allows users to read selected text aloud. The extension adds a context menu item that, when clicked, sends a message to the extension's background script. The background script then uses the Web Speech API to speak the selected text.
+
+## Here is a more detailed explanation of the code:
+1) manifest.json:
+
+This file is the extension's manifest, which provides important information about the extension.
+It declares the version, name, and permissions required by the extension.
+It specifies the background script (background.js) that runs as a service worker.
+It defines the extension's action, including the default popup (popup.html) and icons.
+
+2) popup.html:
+
+This is the HTML file for the extension's popup window.
+It contains a title, some text, and serves as the user interface for the extension.
+
+3)popup.css:
+
+This file defines the CSS styling for the popup.html page.
+
+4) popup.js:
+
+This JavaScript code is responsible for populating a dropdown select element (voice-select) with available voices obtained from the Web Speech API.
+It fetches the voices when the window loads and adds them as options to the dropdown.
+
+5) background.js:
+
+This script runs as a service worker in the background and performs various tasks.
+It creates a context menu item ("Read selected text") that appears when text is selected.
+When the context menu item is clicked, it sends a message to the active tab's content script (content.js) to read the selected text aloud.
+
+6) content.js:
+
+This script runs in the context of the web page and listens for messages from the background script.
+When it receives a message with the action "readSelectedText", it retrieves the selected text on the page using the window.getSelection() method.
+If there is selected text, it creates a SpeechSynthesisUtterance object with the selected text and uses the speechSynthesis.speak() method to speak it.
